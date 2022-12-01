@@ -1,7 +1,8 @@
 global using BlazorAds.Shared;
 global using Microsoft.EntityFrameworkCore;
 global using BlazorAds.Server.Data;
-using BlazorAds.Server.Data;
+global using BlazorAds.Server.Services.PosterService;
+
 using Microsoft.AspNetCore.ResponseCompression;
 
 
@@ -19,6 +20,9 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IPosterService, PosterService>();
+
 
 var app = builder.Build();
 

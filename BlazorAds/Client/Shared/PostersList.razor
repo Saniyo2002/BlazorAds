@@ -1,13 +1,18 @@
 ﻿@using BlazorAds.Shared
-@inject HttpClient Http;
-
+@inject IPosterService PosterService
+@if(PosterService.Posters == null || PosterService.Posters.Count == 0)
+{
+    <span>Загружаем объявления...</span>
+}
+else
+{
 <h3>Последние объявления</h3>
 <ul class="list-unstyledl">
-    @foreach (var ad in Posters)
+    @foreach (var ad in PosterService.Posters)
    {
        <li class="oi-media-pause my-3">
            <div class="media-img-wrapper mr-2">
-               <a href = "#">
+               <a href = "/poster/@ad.Id">
                    <img class="media-img" src="@ad.ImageUrl" alt="@ad.Title">
                </a>
            </div>
@@ -24,14 +29,13 @@
        </li>
    }
 </ul>
+}
 
 @code {
     private static List<Poster> Posters = new List<Poster>();
     protected override async Task OnInitializedAsync()
     {
-        var result = await Http.GetFromJsonAsync<List<Poster>>("api/poster");
-        if (result != null)
-            Posters = result;
+        await PosterService.GetPosters();
     }
 
 }

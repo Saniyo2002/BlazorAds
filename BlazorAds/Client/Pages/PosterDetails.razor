@@ -1,0 +1,44 @@
+﻿@page "/poster/{id:int}"
+@inject IPosterService PosterService
+@if (poster == null)
+{
+    <span>@message</span>
+}
+else
+{
+    <div class = "media">
+        <div class="media-img-wrapper mr2">
+            <img class="media-img" src="@poster.ImageUrl" alt="@poster.Title">
+        </div>
+        <div class="media-body">
+            <h2 class="mb-0">@poster.Title</h2>
+            <p>@poster.Description</p>
+            <h4 class="price">
+                @poster.Price
+            </h4>
+        </div>
+    </div>
+}
+
+@code {
+    private Poster? poster = null;
+    private string message = string.Empty;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        message = "Загружаем объявления...";
+
+        var result = await PosterService.GetPoster(Id);
+        if(!result.Success)
+        {
+            message = result.Message;
+        }
+        else
+        {
+            poster = result.Data;
+        }
+    }
+}
