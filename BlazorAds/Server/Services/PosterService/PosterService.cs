@@ -34,5 +34,17 @@ namespace BlazorAds.Server.Services.PosterService
             }
             return response;
         }
+
+        public async Task<ServiceResponse<List<Poster>>> GetPostersByCategory(string categoryUrl)
+        {
+            var response = new ServiceResponse<List<Poster>>
+            {
+                Data = await _context.Posters
+                     .Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()))
+                     .ToListAsync()
+
+            };
+            return response;
+        }
     }
 }

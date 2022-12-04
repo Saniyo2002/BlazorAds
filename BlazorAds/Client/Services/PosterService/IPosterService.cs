@@ -2,8 +2,9 @@
 {
     public interface IPosterService
     {
+        event Action PostersChanged;
         List<Poster> Posters { get; set; }
-        Task GetPosters();
+        Task GetPosters(string? categoryUrl = null);
         Task<ServiceResponse<Poster>> GetPoster(int productId);
 
     }

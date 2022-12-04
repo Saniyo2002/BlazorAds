@@ -1,5 +1,6 @@
 ﻿@using BlazorAds.Shared
 @inject IPosterService PosterService
+@implements IDisposable
 @if(PosterService.Posters == null || PosterService.Posters.Count == 0)
 {
     <span>Загружаем объявления...</span>
@@ -32,10 +33,14 @@ else
 }
 
 @code {
-    private static List<Poster> Posters = new List<Poster>();
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await PosterService.GetPosters();
+       PosterService.PostersChanged += StateHasChanged;
     }
+    public void Dispose()
+    {
+       PosterService.PostersChanged += StateHasChanged; 
+    }
+
 
 }

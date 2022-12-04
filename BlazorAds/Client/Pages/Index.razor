@@ -1,3 +1,15 @@
 ﻿@page "/"
+@page "/{categoryUrl}"
+@inject IPosterService PosterService
 
 <PostersList></PostersList>
+
+@code {
+    [Parameter]
+    public string? CategoryUrl { get; set; }
+    protected override async Task OnParametersSetAsync()
+    {
+        await PosterService.GetPosters(CategoryUrl);
+
+    }
+}

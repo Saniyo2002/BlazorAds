@@ -26,5 +26,11 @@ namespace BlazorAds.Server.Controllers
             var result = await _posterService.GetPostersAsync(posterId);
             return Ok(result);
         }
+        [HttpGet("category/{categoryUrl}")]
+        public async Task<ActionResult<ServiceResponse<Poster>>> GetAdsByCategory(string categoryUrl)
+        {
+            var result = await _posterService.GetPostersByCategory(categoryUrl);
+            return Ok(result);
+        }
     }
 }

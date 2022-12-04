@@ -6,6 +6,7 @@ namespace BlazorAds.Server.Services.PosterService
     {
         Task<ServiceResponse<List<Poster>>> GetPostersAsync();
         Task<ServiceResponse<Poster>> GetPostersAsync(int posterId);
-       
+        Task<ServiceResponse<List<Poster>>> GetPostersByCategory(string categoryUrl);
+
     }
 }
